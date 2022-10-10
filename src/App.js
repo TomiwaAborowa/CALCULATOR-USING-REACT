@@ -1,14 +1,14 @@
-import React, { useReducer } from 'react';
-import './style.css';
-import DigButton from './DigButton';
-import OperationButton from './OperationButton';
+import React, { useReducer } from "react";
+import "./style.css";
+import DigButton from "./DigButton";
+import OperationButton from "./OperationButton";
 
 export const ACTIONS = {
-  ADD_DIGITS: 'add-digit',
-  CHOOSE_OPERATION: 'choose-operation',
-  DELETE_DIGITS: 'delete-digit',
-  CLEAR: 'clear',
-  EVALUATE: 'evaluate',
+  ADD_DIGITS: "add-digit",
+  CHOOSE_OPERATION: "choose-operation",
+  DELETE_DIGITS: "delete-digit",
+  CLEAR: "clear",
+  EVALUATE: "evaluate",
 };
 
 function reducer(state, { type, payload }) {
@@ -21,15 +21,15 @@ function reducer(state, { type, payload }) {
           overwrite: false,
         };
       }
-      if (state.currentOperand === '0' && payload.digit === '0') {
+      if (state.currentOperand === "0" && payload.digit === "0") {
         return state;
       }
-      if (payload.digit === '.' && state.currentOperand.includes('.')) {
+      if (payload.digit === "." && state.currentOperand.includes(".")) {
         return state;
       }
       return {
         ...state,
-        currentOperand: `${state.currentOperand || ''}${payload.digit}`,
+        currentOperand: `${state.currentOperand || ""}${payload.digit}`,
       };
     case ACTIONS.CHOOSE_OPERATION:
       if (state.currentOperand == null && state.previousOperand == null) {
@@ -88,30 +88,30 @@ function reducer(state, { type, payload }) {
         ...state,
         currentOperand: state.currentOperand.slice(0, -1),
       };
-      default:
+    default:
   }
 }
 
 function evaluate({ previousOperand, currentOperand, operation }) {
   const prev = parseFloat(previousOperand);
   const current = parseFloat(currentOperand);
-  if (isNaN(prev) || isNaN(current)) return '';
+  if (isNaN(prev) || isNaN(current)) return "";
 
-  let computation = '';
+  let computation = "";
   switch (operation) {
-    case '+':
+    case "+":
       computation = prev + current;
       break;
-    case '-':
+    case "-":
       computation = prev - current;
       break;
-    case '*':
+    case "*":
       computation = prev * current;
       break;
-    case '/':
+    case "/":
       computation = prev / current;
       break;
-      default:
+    default:
   }
   return computation.toString();
 }
@@ -152,17 +152,20 @@ export default function App() {
       </button>
       <OperationButton operation="/" dispatch={dispatch} />
 
-      <DigButton digit="1" dispatch={dispatch} />
-      <DigButton digit="2" dispatch={dispatch} />
-      <DigButton digit="3" dispatch={dispatch} />
+      <DigButton digit="7" dispatch={dispatch} />
+      <DigButton digit="8" dispatch={dispatch} />
+      <DigButton digit="9" dispatch={dispatch} />
+
       <OperationButton operation="*" dispatch={dispatch} />
       <DigButton digit="4" dispatch={dispatch} />
       <DigButton digit="5" dispatch={dispatch} />
       <DigButton digit="6" dispatch={dispatch} />
+
       <OperationButton operation="+" dispatch={dispatch} />
-      <DigButton digit="7" dispatch={dispatch} />
-      <DigButton digit="8" dispatch={dispatch} />
-      <DigButton digit="9" dispatch={dispatch} />
+      <DigButton digit="1" dispatch={dispatch} />
+      <DigButton digit="2" dispatch={dispatch} />
+      <DigButton digit="3" dispatch={dispatch} />
+
       <OperationButton operation="-" dispatch={dispatch} />
       <DigButton digit="." dispatch={dispatch} />
       <DigButton digit="0" dispatch={dispatch} />
